@@ -675,7 +675,7 @@ async function setRank(id,rank,cardEl){
 
 async function saveClass(id,val,btn){
   const ac=val==='none'?null:val;
-  const{error}=await sb.from('premier_players').update({agent_class:ac||'Flex'}).eq('id',id);
+  const{error}=await sb.from('premier_players').update({agent_class:val==='none'?null:val}).eq('id',id);
   if(error){toast('Error',false);return;}
   toast('Class saved ✓');
   // update active states on sibling buttons
