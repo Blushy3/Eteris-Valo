@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Eteris - Your Status</title>
+  <meta name="theme-color" content="#ff4655"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#060608;--bg2:#0c0c12;--bg3:#111118;--border:rgba(255,255,255,.07);--border-hv:rgba(255,255,255,.14);--text:#e8eaf0;--muted:#6b7280;--muted2:#4b5563;--red:#ff4655;--red-dim:rgba(255,70,85,.12);--green:#10b981;--green-dim:rgba(16,185,129,.12);--gold:#f59e0b;--font-head:'Barlow Condensed',sans-serif;--font-body:'Rajdhani',sans-serif;--font-mono:'JetBrains Mono',monospace}
+    body{min-height:100vh;background:radial-gradient(circle at 80% 0,rgba(255,70,85,.08),transparent 34%),radial-gradient(circle at 8% 40%,rgba(0,212,255,.04),transparent 28%),var(--bg);color:var(--text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.34;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
+    nav{position:sticky;top:0;z-index:20;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1280px)/2));background:rgba(6,6,8,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(22px)}
+    .nav-logo{text-decoration:none}.nav-logo-text{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase}.nav-logo-text span{color:var(--red)}
+    .nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px}.nav-a{font-family:var(--font-head);font-size:15px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 14px;border-radius:6px;text-decoration:none}.nav-a:hover,.nav-a.active{color:var(--text);background:rgba(255,255,255,.04)}
+    .nav-right{display:flex;align-items:center;gap:8px}.nav-user-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:100px;padding:4px 12px 4px 4px;text-decoration:none}.nav-user-av{width:26px;height:26px;border-radius:50%;background:var(--red-dim);border:1px solid rgba(255,70,85,.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:11px;font-weight:800;color:var(--red);overflow:hidden}.nav-user-av img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-family:var(--font-mono);font-size:10px;color:var(--text)}
+    .login-btn,.btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:7px 13px;cursor:pointer;text-decoration:none}.login-btn:hover,.btn:hover{color:var(--text);border-color:var(--border-hv)}
+    .page{position:relative;z-index:1;width:min(1050px,calc(100vw - 32px));margin:50px auto 80px}.head{margin-bottom:24px}.eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}.title{font-family:var(--font-head);font-size:52px;font-weight:800;text-transform:uppercase;line-height:1}.sub{color:var(--muted);font-size:16px;margin-top:8px}
+    .choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}.choice-btn{min-height:118px;border-radius:14px;border:1px solid var(--border);background:rgba(12,12,18,.74);color:var(--text);cursor:pointer;text-align:left;padding:22px;transition:.18s;backdrop-filter:blur(16px)}.choice-btn:hover{border-color:var(--border-hv);transform:translateY(-2px)}.choice-btn.ready.active{border-color:rgba(16,185,129,.42);background:rgba(16,185,129,.09)}.choice-btn.not-ready.active{border-color:rgba(255,70,85,.42);background:rgba(255,70,85,.09)}.choice-title{font-family:var(--font-head);font-size:32px;font-weight:800;text-transform:uppercase}.choice-sub{color:var(--muted);font-size:14px;margin-top:5px;line-height:1.6}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}.sum{background:rgba(12,12,18,.72);border:1px solid var(--border);border-radius:12px;padding:15px}.sum-k{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}.sum-v{font-family:var(--font-head);font-size:34px;font-weight:800;margin-top:4px}.sum.ready .sum-v{color:var(--green)}.sum.no .sum-v{color:var(--red)}
+    .columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.panel{background:rgba(12,12,18,.74);border:1px solid var(--border);border-radius:14px;padding:16px;min-height:220px}.panel-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:12px}.panel-title.ready{color:var(--green)}.panel-title.no{color:var(--red)}.player{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03);margin-bottom:8px}.av{width:34px;height:34px;border-radius:50%;background:var(--bg3);border:1px solid var(--border-hv);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--font-head);font-size:13px;font-weight:800;color:var(--red)}.av img{width:100%;height:100%;object-fit:cover}.pname{font-weight:700;font-size:16px;line-height:1.1}.ptime{font-family:var(--font-mono);font-size:9px;color:var(--muted2);margin-top:3px}.empty{color:var(--muted2);font-family:var(--font-mono);font-size:11px;padding:8px}.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;background:rgba(12,12,18,.96);border:1px solid var(--border-hv);border-radius:999px;padding:11px 18px;font-size:14px;font-weight:700;transition:.22s;z-index:70}.toast.show{opacity:1;transform:translateX(-50%)}.locked{display:flex;align-items:center;justify-content:center;min-height:50vh;text-align:center}.locked-card{width:min(430px,100%);background:rgba(12,12,18,.78);border:1px solid var(--border);border-radius:14px;padding:28px}
+    .confirm-layer{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(14px)}.confirm-layer.open{display:flex}.confirm-card{width:min(500px,100%);background:rgba(12,12,18,.98);border:1px solid rgba(255,70,85,.2);border-radius:16px;padding:24px;box-shadow:0 22px 70px rgba(0,0,0,.7)}.confirm-step{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:10px}.confirm-title{font-family:var(--font-head);font-size:34px;font-weight:800;text-transform:uppercase;line-height:1.05}.confirm-copy{color:var(--muted);font-size:16px;line-height:1.6;margin:10px 0 18px}.confirm-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.confirm-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;border-radius:8px;border:1px solid var(--border);padding:11px 10px;cursor:pointer;background:rgba(255,255,255,.04);color:var(--muted);transition:.15s}.confirm-btn:hover{border-color:var(--border-hv);color:var(--text);background:rgba(255,255,255,.07)}.confirm-btn.no{color:var(--red);border-color:rgba(255,70,85,.25);background:rgba(255,70,85,.08)}.confirm-btn.yes{color:var(--green);border-color:rgba(16,185,129,.24);background:rgba(16,185,129,.08)}.confirm-actions.trap .confirm-btn.no{order:-1}.confirm-actions.trap .confirm-btn.yes{order:1}
+    @media(max-width:850px){.nav-links{display:none}.choice,.summary,.columns{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html"><div class="nav-logo-text">Eteris<span>.</span></div></a>
+  <div class="nav-links"><a class="nav-a" href="index.html">Dashboard</a><a class="nav-a" href="notes.html">Notes</a><a class="nav-a active" href="status.html">Status</a></div>
+  <div class="nav-right" id="nav-user-area"></div>
+</nav>
+<main class="page" id="page"></main>
+<div class="confirm-layer" id="no-confirm">
+  <div class="confirm-card">
+    <div class="confirm-step" id="confirm-step">Step 1 / 15</div>
+    <div class="confirm-title" id="confirm-title">Wait. Not ready?</div>
+    <p class="confirm-copy" id="confirm-copy">You are about to enter the legendary bench dimension. Are you sure?</p>
+    <div class="confirm-actions" id="confirm-actions">
+      <button class="confirm-btn yes" type="button" onclick="escapeNoFlow('ready')">Yes, I play</button>
+      <button class="confirm-btn" type="button" onclick="escapeNoFlow('maybe')">Maybe</button>
+      <button class="confirm-btn no" type="button" onclick="continueNoFlow()">No</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const sb=supabase.createClient('https://jczxgcbxqnnhlafvekul.supabase.co','sb_publishable_ZsL8foOFNJYOa3FW4YoKdw_-gJCnZ5P');
+const SESSION_KEY='eteris_social_user';
+const getS=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}};
+const setS=u=>u?localStorage.setItem(SESSION_KEY,JSON.stringify(u)):localStorage.removeItem(SESSION_KEY);
+let me=getS(), accounts=[], players=[], statuses=[], noStep=0, trapStep=-1;
+const noQuestions=[
+  ['Wait. Not ready?','You are about to enter the legendary bench dimension. Are you sure?'],
+  ['Your duo is already typing','They wrote "bro?" in team chat. Still no?'],
+  ['Coach clipboard detected','The spreadsheet just started sweating. Continue?'],
+  ['Five people need a fifth','Statistically, you are suspiciously close to being useful. Still no?'],
+  ['Premier queue is watching','It has your name saved in drafts. Are we really doing this?'],
+  ['The warmup lobby is silent','Somewhere, a Classic pistol is waiting for you. Still not playing?'],
+  ['This is not a drill','Clicking no again may cause tactical disappointment. Proceed?'],
+  ['Your crosshair misses you','It said it can change. Probably lying, but still. No?'],
+  ['The team comp looks weird','Someone is about to lock five duelists if you leave. Still no?'],
+  ['Final boss: commitment','Your availability arc is getting dramatic. Continue?'],
+  ['The vibes committee objects','They voted 6-0 that you should maybe play. Ignore them?'],
+  ['Emergency smoke check','Nobody knows lineups, but confidence is high. Still out?'],
+  ['Almost there','At this point the button has filed an HR complaint. Keep going?'],
+  ['Second last chance','You can still become a hero by clicking literally anything else. No?'],
+  ['Last confirmation','Respect. If you click no now, we mark you as not playing. Final answer?']
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400)}
+function renderNav(){const area=$('#nav-user-area');if(!me){area.innerHTML='<a class="login-btn" href="notes.html">Login</a>';return}const name=me.display_name||me.username;const av=me.avatar_url?`<img src="${esc(me.avatar_url)}" alt=""/>`:esc(name.slice(0,2).toUpperCase());area.innerHTML=`<a class="nav-user-pill" href="account.html"><div class="nav-user-av">${av}</div><span class="nav-user-name">${esc(name)}</span></a><button class="login-btn" onclick="logout()">Logout</button>`}
+function logout(){me=null;setS(null);renderNav();renderLocked()}
+function rowName(account,player){return account?.display_name||player?.username||account?.username||'Player'}
+function rowAvatar(account,name){return account?.avatar_url?`<img src="${esc(account.avatar_url)}" alt=""/>`:esc((name||'?').slice(0,2).toUpperCase())}
+function timeAgo(iso){if(!iso)return '';const m=Math.floor((Date.now()-new Date(iso).getTime())/60000);if(m<1)return 'just now';if(m<60)return `${m}m ago`;const h=Math.floor(m/60);if(h<24)return `${h}h ago`;return `${Math.floor(h/24)}d ago`}
+function mergedRows(){return players.map(p=>{const account=accounts.find(a=>a.player_id===p.id)||accounts.find(a=>a.username?.toLowerCase()===p.username?.toLowerCase());const status=statuses.find(s=>s.account_id===account?.id);return{player:p,account,status}}).filter(x=>x.account)}
+function playerCard(r){const name=rowName(r.account,r.player);return `<div class="player"><div class="av">${rowAvatar(r.account,name)}</div><div><div class="pname">${esc(name)}</div><div class="ptime">${r.status?timeAgo(r.status.updated_at):'no status'}</div></div></div>`}
+function renderLocked(){renderNav();$('#page').innerHTML=`<div class="locked"><div class="locked-card"><div class="eyebrow">Your status</div><h1 class="title" style="font-size:36px">Login required</h1><p class="sub">Log in through Notes to set your Premier availability.</p><a class="btn" style="display:inline-flex;margin-top:16px" href="notes.html">Login</a></div></div>`}
+function render(){renderNav();if(!me){renderLocked();return}const mine=statuses.find(s=>s.account_id===me.id)?.status||'';const rows=mergedRows();const ready=rows.filter(r=>r.status?.status==='ready');const no=rows.filter(r=>r.status?.status==='not_ready');const unknown=rows.filter(r=>!r.status);$('#page').innerHTML=`<div class="head"><div class="eyebrow">Premier</div><h1 class="title">Your Status</h1><p class="sub">Set whether you are playing the next Premier match. Everyone on the team can see it.</p></div><div class="choice"><button class="choice-btn ready ${mine==='ready'?'active':''}" onclick="chooseStatus('ready')"><div class="choice-title">Ready</div><div class="choice-sub">I am playing. Put me on the Premier list.</div></button><button class="choice-btn not-ready ${mine==='not_ready'?'active':''}" onclick="chooseStatus('not_ready')"><div class="choice-title">Not playing</div><div class="choice-sub">I am not available or I am dodging responsibility.</div></button></div><div class="summary"><div class="sum ready"><div class="sum-k">Ready</div><div class="sum-v">${ready.length}</div></div><div class="sum no"><div class="sum-k">Not playing</div><div class="sum-v">${no.length}</div></div><div class="sum"><div class="sum-k">No status</div><div class="sum-v">${unknown.length}</div></div></div><div class="columns"><section class="panel"><div class="panel-title ready">Ready</div>${ready.length?ready.map(playerCard).join(''):'<div class="empty">Nobody is ready yet.</div>'}</section><section class="panel"><div class="panel-title no">Not playing</div>${no.length?no.map(playerCard).join(''):'<div class="empty">Nobody has opted out.</div>'}</section><section class="panel"><div class="panel-title">No status</div>${unknown.length?unknown.map(playerCard).join(''):'<div class="empty">Everyone has set a status.</div>'}</section></div>`}
+async function load(){const[{data:a},{data:p},{data:s}]=await Promise.all([sb.from('accounts').select('*'),sb.from('premier_players').select('*').order('sort_order'),sb.from('premier_status').select('*')]);accounts=a||[];players=p||[];statuses=s||[];render()}
+function currentStatus(){return statuses.find(s=>s.account_id===me?.id)?.status||''}
+async function clearStatus(){if(!me)return;const{error}=await sb.from('premier_status').delete().eq('account_id',me.id);if(error){toast('Save error');return}toast('Status cleared');await load()}
+function chooseStatus(status){if(currentStatus()===status){clearStatus();return}if(status==='not_ready'){startNoFlow();return}setStatus(status)}
+async function setStatus(status){if(!me)return;const{error}=await sb.from('premier_status').upsert({account_id:me.id,status,updated_at:new Date().toISOString()});if(error){toast('Save error');return}toast(status==='ready'?'Ready saved':'Status saved');await load()}
+function startNoFlow(){noStep=0;trapStep=Math.floor(Math.random()*(noQuestions.length-2))+1;renderNoFlow();$('#no-confirm').classList.add('open')}
+function renderNoFlow(){const q=noQuestions[noStep];const trap=noStep===trapStep;$('#confirm-step').textContent=`Step ${noStep+1} / ${noQuestions.length}${trap?' · focus check':''}`;$('#confirm-title').textContent=q[0];$('#confirm-copy').textContent=trap?`${q[1]} Careful: the buttons are not where your muscle memory expects them.`:q[1];$('#confirm-actions').classList.toggle('trap',trap)}
+function closeNoFlow(){$('#no-confirm').classList.remove('open')}
+function escapeNoFlow(){closeNoFlow();setStatus('ready')}
+function continueNoFlow(){if(noStep<noQuestions.length-1){noStep++;renderNoFlow();return}closeNoFlow();setStatus('not_ready')}
+renderNav();load();
+</script>
+</body>
+</html>
