@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Eteris - Rules & Privacy</title>
+  <meta name="theme-color" content="#ff4655"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-modal.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#060608;--bg2:#0c0c12;--bg3:#111118;--border:rgba(255,255,255,.07);--border-hv:rgba(255,255,255,.15);--text:#e8eaf0;--muted:#6b7280;--muted2:#4b5563;--red:#ff4655;--red-dim:rgba(255,70,85,.12);--green:#10b981;--gold:#f59e0b;--font-head:'Barlow Condensed',sans-serif;--font-body:'Rajdhani',sans-serif;--font-mono:'JetBrains Mono',monospace}
+    body{min-height:100vh;background:radial-gradient(circle at 78% 0,rgba(255,70,85,.08),transparent 34%),radial-gradient(circle at 8% 36%,rgba(0,212,255,.04),transparent 28%),var(--bg);color:var(--text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.34;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
+    nav{position:sticky;top:0;z-index:20;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1280px)/2));background:rgba(6,6,8,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(22px)}
+    .nav-logo{text-decoration:none}.nav-logo-text{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase}.nav-logo-text span{color:var(--red)}
+    .nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px}.nav-a{font-family:var(--font-head);font-size:15px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 14px;border-radius:6px;text-decoration:none}.nav-a:hover,.nav-a.active{color:var(--text);background:rgba(255,255,255,.04)}
+    .nav-right{display:flex;align-items:center;gap:8px}.nav-user-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:100px;padding:4px 12px 4px 4px;text-decoration:none}.nav-user-av{width:26px;height:26px;border-radius:50%;background:var(--red-dim);border:1px solid rgba(255,70,85,.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:11px;font-weight:800;color:var(--red);overflow:hidden;flex-shrink:0}.nav-user-av img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-family:var(--font-mono);font-size:10px;color:var(--text);letter-spacing:.5px}.login-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;text-decoration:none}.login-btn:hover{color:var(--text);border-color:var(--border-hv)}
+    .page{position:relative;z-index:1;width:min(1120px,calc(100vw - 32px));margin:52px auto 80px}.hero{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:stretch;margin-bottom:18px}.eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}.title{font-family:var(--font-head);font-size:56px;font-weight:800;text-transform:uppercase;line-height:1}.sub{color:var(--muted);font-size:16px;line-height:1.6;margin-top:8px;max-width:720px}
+    .card{background:rgba(12,12,18,.76);border:1px solid var(--border);border-radius:14px;padding:22px;backdrop-filter:blur(18px)}.stamp{display:flex;flex-direction:column;justify-content:space-between;min-height:210px}.stamp-k{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}.stamp-v{font-family:var(--font-head);font-size:38px;font-weight:800;color:#fff;line-height:1}.stamp-note{color:var(--muted);font-size:14px;line-height:1.55}
+    .layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px}.toc{position:sticky;top:84px;align-self:start}.toc a{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:10px 0;border-bottom:1px solid var(--border)}.toc a:hover{color:var(--text)}.section{margin-bottom:14px}.section h2{font-family:var(--font-head);font-size:34px;font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:10px}.section p{color:var(--muted);font-size:16px;line-height:1.75;margin:8px 0}.rule-list{display:grid;gap:8px;margin-top:12px}.rule{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03)}.rule-num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--red-dim);border:1px solid rgba(255,70,85,.26);font-family:var(--font-head);font-weight:800;color:var(--red)}.rule b{display:block;font-size:17px;color:#fff;margin-bottom:2px}.rule span{display:block;color:var(--muted);font-size:14px;line-height:1.55}.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.pill{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.035)}.notice{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.055)}.notice h2{color:#fff}.notice .eyebrow{color:var(--gold)}.footer-note{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--muted2);margin-top:18px}.link{color:var(--text);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.22)}.link:hover{border-color:var(--red);color:#fff}
+    @media(max-width:900px){.nav-links{display:none}.hero,.layout{grid-template-columns:1fr}.toc{position:relative;top:auto}.title{font-size:46px}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html"><div class="nav-logo-text">Eteris<span>.</span></div></a>
+  <div class="nav-links"><a class="nav-a" href="index.html">Dashboard</a><a class="nav-a" href="notes.html">Notes</a><a class="nav-a" href="status.html">Status</a><a class="nav-a" href="challenges.html">Challenges</a><a class="nav-a" href="feed.html">Feed</a></div>
+  <div class="nav-right" id="nav-user-area"></div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <div class="card">
+      <div class="eyebrow">Team document</div>
+      <h1 class="title">Rules & Privacy</h1>
+      <p class="sub">A plain-English reference for how Eteris uses this site: team availability, feed posts, charity penalties, player data, fair play and credits. This is an internal team document, not a formal legal contract.</p>
+      <div class="pill-row">
+        <span class="pill">Premier status</span>
+        <span class="pill">Charity penalties</span>
+        <span class="pill">Private notes</span>
+        <span class="pill">Team feed</span>
+        <span class="pill">Account data</span>
+      </div>
+    </div>
+    <aside class="card stamp">
+      <div>
+        <div class="stamp-k">Current version</div>
+        <div class="stamp-v">V2</div>
+      </div>
+      <p class="stamp-note">Acceptance version: 2026-06-03-v2. Major rule changes should bump this version and require everyone to accept the rules again.</p>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <aside class="card toc">
+      <a href="#team-rules">Team Rules</a>
+      <a href="#status-rule">Status Rule</a>
+      <a href="#charity">Charity Penalties</a>
+      <a href="#feed-rules">Feed Rules</a>
+      <a href="#privacy">Privacy & Data</a>
+      <a href="#ethics">Ethics</a>
+      <a href="#licenses">Thanks & Licenses</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </aside>
+
+    <div>
+      <section class="card section" id="team-rules">
+        <div class="eyebrow">Basics</div>
+        <h2>Team Rules</h2>
+        <p>These rules keep Premier prep simple and fair. The site exists to reduce confusion, not to create drama.</p>
+        <div class="rule-list">
+          <div class="rule"><div class="rule-num">1</div><div><b>Set your availability clearly.</b><span>Use the Status page before Premier so the team knows who is ready and who is not available.</span></div></div>
+          <div class="rule"><div class="rule-num">2</div><div><b>Keep notes useful.</b><span>Notes should help with practice, maps, tactics or personal prep. Do not store sensitive private information here.</span></div></div>
+          <div class="rule"><div class="rule-num">3</div><div><b>Respect admin edits.</b><span>Admins can update score, status resets, challenges and penalties to keep the team board accurate.</span></div></div>
+          <div class="rule"><div class="rule-num">4</div><div><b>No fake data.</b><span>Do not intentionally change your account, status or notes in a way that misleads the team.</span></div></div>
+        </div>
+      </section>
+
+      <section class="card section notice" id="status-rule">
+        <div class="eyebrow">Premier</div>
+        <h2>Status Rule</h2>
+        <p>If you do not set either Ready or Not ready by the day before Premier starts, you agree to donate 25 PLN or more to any charity fundraiser. By using this site and playing in the team, you accept this team rule.</p>
+        <p>Changing your mind is fine. The important part is making the status visible early enough for the team to plan.</p>
+      </section>
+
+      <section class="card section" id="charity">
+        <div class="eyebrow">Charity</div>
+        <h2>Penalties</h2>
+        <p>Penalties are internal team accountability rules. They are not payments to Eteris. When a penalty is assigned, the player should donate the amount to a charity fundraiser of their choice unless the team agrees otherwise.</p>
+        <p>The public penalty list is only meant to show who still has an amount to handle. It should not be used to shame people.</p>
+      </section>
+
+      <section class="card section" id="feed-rules">
+        <div class="eyebrow">Social</div>
+        <h2>Feed Rules</h2>
+        <p>The Feed is for team updates, clips, useful links and normal short posts. Keep it readable and do not spam repeated posts, empty comments or misleading links.</p>
+        <p>Post only content you are comfortable sharing with the team. Do not post private screenshots, personal data, account codes, passwords or anything that would cause problems if another teammate saw it.</p>
+        <p>Likes and comments are lightweight team reactions. They should not be used to harass people, farm drama or pressure someone into playing.</p>
+      </section>
+
+      <section class="card section" id="privacy">
+        <div class="eyebrow">Data</div>
+        <h2>Privacy & Data</h2>
+        <p>The site stores only the data needed for the team dashboard: account name, login code, display name, avatar link or uploaded avatar, notes, feed posts, comments, likes, Premier status, challenges and charity penalty amounts.</p>
+        <p>Private notes are intended for your own use inside the team app. Site admins and database maintainers may still be able to access stored data while maintaining the project, so do not store passwords, personal documents or sensitive information.</p>
+        <p>You can use the Account page to change your display name, avatar and login code. You can also delete your personal notes, display name and avatar from the Account page. Feed content may remain visible until an admin or database maintainer removes it.</p>
+      </section>
+
+      <section class="card section" id="ethics">
+        <div class="eyebrow">Conduct</div>
+        <h2>Ethics & Fair Play</h2>
+        <p>Eteris is built around fair play. Do not use the site to share cheats, stolen accounts, private data, harassment, doxxing or anything that breaks Riot Games rules.</p>
+        <p>Feedback should be direct, but not toxic. The point of tracking status, challenges and notes is to help people improve and keep Premier organized.</p>
+      </section>
+
+      <section class="card section" id="licenses">
+        <div class="eyebrow">Credits</div>
+        <h2>Thanks & Licenses</h2>
+        <p>This project uses Supabase for database and storage features, Google Fonts for typography and the Supabase JavaScript client from a public CDN.</p>
+        <p>Valorant names, map names, agent names and related game assets belong to Riot Games. Eteris is an independent team project and is not endorsed by Riot Games.</p>
+      </section>
+
+      <section class="card section" id="disclaimer">
+        <div class="eyebrow">Small print</div>
+        <h2>Disclaimer</h2>
+        <p>This page is a practical internal rules page for a small esports team. It is not legal advice. If the project becomes public, commercial or stores more sensitive data, the policy should be reviewed properly.</p>
+        <div class="footer-note">Eteris Esport - Valorant Premier - internal team dashboard</div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+const sb=supabase.createClient('https://jczxgcbxqnnhlafvekul.supabase.co','sb_publishable_ZsL8foOFNJYOa3FW4YoKdw_-gJCnZ5P');
+const SESSION_KEY='eteris_social_user';
+const getS=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}};
+const setS=u=>u?localStorage.setItem(SESSION_KEY,JSON.stringify(u)):localStorage.removeItem(SESSION_KEY);
+let me=getS();
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function renderNav(){
+  const area=document.getElementById('nav-user-area');
+  if(!me){area.innerHTML='<button class="login-btn" type="button" onclick="openLogin()">Login</button>';return}
+  const name=me.display_name||me.username;
+  const av=me.avatar_url?`<img src="${esc(me.avatar_url)}" alt=""/>`:esc(name.slice(0,2).toUpperCase());
+  area.innerHTML=`<a class="nav-user-pill" href="account.html"><div class="nav-user-av">${av}</div><span class="nav-user-name">${esc(name)}</span></a><button class="login-btn" onclick="logout()">Logout</button>`;
+}
+function logout(){me=null;setS(null);renderNav()}
+function openLogin(){EterisAuth.open({copy:'Enter your private access code to save rules acceptance to your account.',onLogin:user=>{me=user;setS(user);renderNav()}})}
+renderNav();
+</script>
+<script src="site-footer.js"></script>
+<script src="rules-consent.js"></script>
+</body>
+</html>
