@@ -37,21 +37,22 @@
     <div class="card">
       <div class="eyebrow">Team document</div>
       <h1 class="title">Rules & Privacy</h1>
-      <p class="sub">A plain-English reference for how Eteris uses this site: team availability, feed posts, charity penalties, player data, fair play and credits. This is an internal team document, not a formal legal contract.</p>
+      <p class="sub">A plain-English reference for how Eteris uses this site: team availability, challenges, suggestions, feed posts, stored images, charity penalties, player data and fair play. This is an internal team document, not a formal legal contract.</p>
       <div class="pill-row">
         <span class="pill">Premier status</span>
         <span class="pill">Charity penalties</span>
         <span class="pill">Private notes</span>
         <span class="pill">Team feed</span>
+        <span class="pill">Suggestions</span>
         <span class="pill">Account data</span>
       </div>
     </div>
     <aside class="card stamp">
       <div>
         <div class="stamp-k">Current version</div>
-        <div class="stamp-v">V2</div>
+        <div class="stamp-v">V3</div>
       </div>
-      <p class="stamp-note">Acceptance version: 2026-06-03-v2. Major rule changes should bump this version and require everyone to accept the rules again.</p>
+      <p class="stamp-note">Acceptance version: 2026-06-04-v3. Changes to this document require every user to accept the current version again.</p>
     </aside>
   </section>
 
@@ -61,6 +62,7 @@
       <a href="#status-rule">Status Rule</a>
       <a href="#charity">Charity Penalties</a>
       <a href="#feed-rules">Feed Rules</a>
+      <a href="#suggestions-rules">Suggestions</a>
       <a href="#privacy">Privacy & Data</a>
       <a href="#ethics">Ethics</a>
       <a href="#licenses">Thanks & Licenses</a>
@@ -77,6 +79,7 @@
           <div class="rule"><div class="rule-num">2</div><div><b>Keep notes useful.</b><span>Notes should help with practice, maps, tactics or personal prep. Do not store sensitive private information here.</span></div></div>
           <div class="rule"><div class="rule-num">3</div><div><b>Respect admin edits.</b><span>Admins can update score, status resets, challenges and penalties to keep the team board accurate.</span></div></div>
           <div class="rule"><div class="rule-num">4</div><div><b>No fake data.</b><span>Do not intentionally change your account, status or notes in a way that misleads the team.</span></div></div>
+          <div class="rule"><div class="rule-num">5</div><div><b>Use shared features responsibly.</b><span>Feed posts, comments, suggestions, votes and uploaded images are visible to the team. Do not use them to spam, impersonate or harass anyone.</span></div></div>
         </div>
       </section>
 
@@ -100,14 +103,24 @@
         <p>The Feed is for team updates, clips, useful links and normal short posts. Keep it readable and do not spam repeated posts, empty comments or misleading links.</p>
         <p>Post only content you are comfortable sharing with the team. Do not post private screenshots, personal data, account codes, passwords or anything that would cause problems if another teammate saw it.</p>
         <p>Likes and comments are lightweight team reactions. They should not be used to harass people, farm drama or pressure someone into playing.</p>
+        <p>Use direct image links when practical. Uploaded images use shared Supabase storage and should be kept reasonably small and relevant. Authors can edit or delete their own feed posts, while admins can remove content when moderation is needed.</p>
+      </section>
+
+      <section class="card section" id="suggestions-rules">
+        <div class="eyebrow">Development</div>
+        <h2>Suggestions</h2>
+        <p>Suggestions exist to improve the team site. Write a clear title, explain the problem and describe the proposed solution. Voting helps show interest, but does not guarantee implementation.</p>
+        <p>The author may edit a suggestion once and may permanently delete their own suggestion. Deleting a suggestion also removes its votes and comments. Admins can change statuses, add a team response and remove suggestions when moderation is needed.</p>
+        <p>Keep discussion useful. Repeated ideas, joke spam, personal attacks and intentionally misleading reports may be removed.</p>
       </section>
 
       <section class="card section" id="privacy">
         <div class="eyebrow">Data</div>
         <h2>Privacy & Data</h2>
-        <p>The site stores only the data needed for the team dashboard: account name, login code, display name, avatar link or uploaded avatar, notes, feed posts, comments, likes, Premier status, challenges and charity penalty amounts.</p>
+        <p>The site stores only the data needed for the team dashboard: account name, login code, display name, avatar link or uploaded avatar, notes, feed posts, comments, likes, suggestions, suggestion votes and comments, Premier status, challenges and charity penalty amounts.</p>
         <p>Private notes are intended for your own use inside the team app. Site admins and database maintainers may still be able to access stored data while maintaining the project, so do not store passwords, personal documents or sensitive information.</p>
-        <p>You can use the Account page to change your display name, avatar and login code. You can also delete your personal notes, display name and avatar from the Account page. Feed content may remain visible until an admin or database maintainer removes it.</p>
+        <p>You can use the Account page to change your display name, avatar and login code. You can also delete your personal notes, display name and avatar from the Account page. Authors can delete their own feed posts and suggestions. Admins and database maintainers may remove shared content when required.</p>
+        <p>Uploaded avatars and feed images use shared Supabase storage. When uploaded files are replaced or deleted, the site attempts to remove files that are no longer used by any account or post. Direct external image links remain controlled by their original host.</p>
       </section>
 
       <section class="card section" id="ethics">
@@ -152,6 +165,7 @@ function logout(){me=null;setS(null);renderNav()}
 function openLogin(){EterisAuth.open({copy:'Enter your private access code to save rules acceptance to your account.',onLogin:user=>{me=user;setS(user);renderNav()}})}
 renderNav();
 </script>
+<script src="shared-ui.js"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>

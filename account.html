@@ -82,6 +82,7 @@ document.addEventListener('input',e=>{if(e.target?.id!=='display-name')return;e.
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin();if(e.key==='Enter'&&$('#login-modal')?.classList.contains('open'))login()});
 render();
 </script>
+<script src="shared-ui.js"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>

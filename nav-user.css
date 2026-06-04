@@ -95,6 +95,16 @@ body > nav .nav-a.active {
   border-radius: 100px;
   line-height: 1;
   white-space: nowrap;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .08) !important;
+  color: var(--text, #e8eaf0);
+  text-decoration: none;
+  transition: border-color .15s, background .15s;
+}
+
+.nav-user-pill:hover {
+  border-color: rgba(255, 255, 255, .16) !important;
+  background: rgba(255, 255, 255, .065);
 }
 
 .nav-user-av {
@@ -104,6 +114,7 @@ body > nav .nav-a.active {
   min-width: 26px;
   min-height: 26px;
   line-height: 1;
+  border-color: rgba(255, 255, 255, .14) !important;
 }
 
 .nav-user-name {
@@ -125,8 +136,94 @@ nav .login-btn,
   white-space: nowrap;
 }
 
+.nav-menu-btn {
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border, rgba(255, 255, 255, .07));
+  border-radius: 7px;
+  background: rgba(255, 255, 255, .04);
+  color: var(--text, #e8eaf0);
+  cursor: pointer;
+}
+
+.nav-menu-btn span,
+.nav-menu-btn::before,
+.nav-menu-btn::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  transition: transform .15s;
+}
+
+.nav-menu-btn::before { transform: translateY(-5px); }
+.nav-menu-btn::after { transform: translateY(5px); }
+.nav-menu-btn.open span { opacity: 0; }
+.nav-menu-btn.open::before { transform: rotate(45deg); }
+.nav-menu-btn.open::after { transform: rotate(-45deg); }
+
+.nav-mobile-menu {
+  position: fixed;
+  top: 68px;
+  left: 10px;
+  right: 10px;
+  z-index: 199;
+  display: none;
+  padding: 8px;
+  border: 1px solid var(--border, rgba(255, 255, 255, .07));
+  border-radius: 10px;
+  background: rgba(10, 10, 14, .98);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+}
+
+.nav-mobile-menu.open { display: grid; }
+.nav-mobile-menu .nav-a { width: 100%; justify-content: flex-start; padding: 11px 12px; }
+
 @media (max-width: 1050px) {
   body > nav .nav-links {
     display: none;
+  }
+
+  .nav-menu-btn {
+    position: relative;
+    display: inline-flex;
+  }
+
+  #nav-user-area,
+  #nav-user-area-idx,
+  #nav-user-area > div,
+  #nav-user-area-idx > div,
+  .nav-right {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 620px) {
+  body > nav {
+    padding: 0 10px;
+  }
+
+  .nav-user-name,
+  nav .admin-edit-btn,
+  #nav-user-area .admin-edit-btn,
+  #nav-user-area-idx .admin-edit-btn {
+    display: none;
+  }
+
+  .nav-user-pill {
+    width: 36px;
+    padding: 4px;
+  }
+
+  nav .login-btn,
+  #nav-user-area .login-btn,
+  #nav-user-area-idx .login-btn {
+    padding: 0 8px;
+    font-size: 9px;
   }
 }

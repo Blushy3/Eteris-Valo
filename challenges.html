@@ -76,6 +76,7 @@ async function saveChallenge(accountId){if(!me?.is_admin||!adminEdit)return;cons
 async function load(){const[{data:a},{data:p},{data:c}]=await Promise.all([sb.from('accounts').select('id,player_id,username,display_name,avatar_url,is_admin'),sb.from('premier_players').select('*').order('sort_order'),sb.from('premier_act_challenges').select('*')]);accounts=a||[];players=p||[];challenges=c||[];if(me){const fresh=accounts.find(a=>a.id===me.id);if(fresh){me={...me,...fresh};setS(me)}}render()}
 renderNav();load();
 </script>
+<script src="shared-ui.js"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>
