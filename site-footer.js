@@ -5,6 +5,6 @@
   document.head.appendChild(style);
   const footer=document.createElement('footer');
   footer.className='site-footer';
-  footer.innerHTML=`<div class="site-footer-left">&copy; 2026 Eteris Esport - Valorant Premier - powered by Supabase</div><div class="site-footer-right"><a class="site-footer-link" href="notes.html">Notes</a><a class="site-footer-link" href="feed.html">Feed</a><a class="site-footer-link" href="account.html">Account</a><a class="site-footer-link" href="rules.html">Rules & Privacy</a></div>`;
+  footer.innerHTML=`<div class="site-footer-left">&copy; 2026 Eteris Esport - Valorant Premier - powered by Supabase</div><div class="site-footer-right"><a class="site-footer-link" href="notes.html">Notes</a><a class="site-footer-link" href="feed.html">Feed</a><a class="site-footer-link" href="suggestions.html">Suggestions</a><a class="site-footer-link" href="account.html">Account</a><a class="site-footer-link" href="rules.html">Rules & Privacy</a></div>`;
   document.body.appendChild(footer);
 })();

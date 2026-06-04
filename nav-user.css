@@ -1,0 +1,132 @@
+body > nav {
+  position: sticky;
+  top: 0;
+  left: auto;
+  right: auto;
+  z-index: 200;
+  width: 100%;
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 0 max(24px, calc((100vw - 1280px) / 2));
+  background: rgba(6, 6, 8, .92);
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, .07));
+  backdrop-filter: blur(22px) saturate(1.25);
+}
+
+body > nav .nav-logo,
+body > nav > a:first-child {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+body > nav .nav-logo-text {
+  font-family: var(--font-head, 'Barlow Condensed', sans-serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text, #e8eaf0);
+}
+
+body > nav .nav-logo-text span {
+  color: var(--red, #ff4655);
+}
+
+body > nav .nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+body > nav .nav-a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted, #6b7280);
+  font-family: var(--font-head, 'Barlow Condensed', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color .15s, background .15s;
+}
+
+body > nav .nav-a:hover,
+body > nav .nav-a.active {
+  color: var(--text, #e8eaf0);
+  background: rgba(255, 255, 255, .04);
+}
+
+#nav-user-area,
+#nav-user-area-idx,
+#nav-user-area > div,
+#nav-user-area-idx > div,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-user-pill {
+  box-sizing: border-box;
+  height: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 100px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nav-user-av {
+  box-sizing: border-box;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  line-height: 1;
+}
+
+.nav-user-name {
+  line-height: 1;
+}
+
+nav .login-btn,
+#nav-user-area .login-btn,
+#nav-user-area-idx .login-btn {
+  box-sizing: border-box;
+  height: 28px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border-radius: 6px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 1050px) {
+  body > nav .nav-links {
+    display: none;
+  }
+}
