@@ -92,7 +92,7 @@ const setSession=u=>u?localStorage.setItem(SESSION_KEY,JSON.stringify(u)):localS
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const categoryLabels={new_feature:'New feature',improvement:'Improvement',bug:'Bug',design:'Design'};
-const statusLabels={proposed:'Proposed',considering:'Considering',planned:'Planned',in_progress:'In progress',completed:'Completed',rejected:'Rejected',withdrawn:'Withdrawn'};
+const statusLabels={proposed:'Proposed',considering:'Considering',planned:'Planned',in_progress:'In progress',completed:'Completed',rejected:'Rejected'};
 let me=getSession(),accounts={},suggestions=[],votes=[],comments=[],filter='all',activeId=null,pendingDeleteId=null,editingSuggestionId=null,pendingOwnerEdit=null,adminEdit=false;
 function displayName(a){return a?.display_name||a?.username||'Player'}
 function avatar(a){const n=displayName(a);return a?.avatar_url?`<img src="${esc(a.avatar_url)}" alt=""/>`:esc(n.slice(0,2).toUpperCase())}

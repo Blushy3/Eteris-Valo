@@ -113,8 +113,23 @@ body > nav .nav-a.active {
   height: 26px;
   min-width: 26px;
   min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
-  border-color: rgba(255, 255, 255, .14) !important;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .14) !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, .04) !important;
+}
+
+.nav-user-av img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover;
+  border: 0 !important;
+  border-radius: 50% !important;
 }
 
 .nav-user-name {
