@@ -1,5 +1,5 @@
 (function(){
-  const RULES_VERSION='2026-06-09-v6';
+  const RULES_VERSION='2026-06-09-v7';
   const SESSION_KEY='eteris_social_user';
   const ACCEPT_PREFIX='eteris_rules_acceptance_';
   const SUPABASE_URL='https://jczxgcbxqnnhlafvekul.supabase.co';
