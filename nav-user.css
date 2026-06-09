@@ -79,12 +79,12 @@ body > nav .nav-a.active {
 #nav-user-area > div,
 #nav-user-area-idx > div,
 .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 }
 
-.nav-user-pill {
+body > nav .nav-user-pill {
   box-sizing: border-box;
   height: 36px;
   min-height: 36px;
@@ -97,17 +97,17 @@ body > nav .nav-a.active {
   white-space: nowrap;
   background: rgba(255, 255, 255, .05);
   border: 1px solid rgba(255, 255, 255, .08) !important;
-  color: var(--text, #e8eaf0);
-  text-decoration: none;
+  color: var(--text, #e8eaf0) !important;
+  text-decoration: none !important;
   transition: border-color .15s, background .15s;
 }
 
-.nav-user-pill:hover {
+body > nav .nav-user-pill:hover {
   border-color: rgba(255, 255, 255, .16) !important;
   background: rgba(255, 255, 255, .065);
 }
 
-.nav-user-av {
+body > nav .nav-user-av {
   box-sizing: border-box;
   width: 26px;
   height: 26px;
@@ -116,14 +116,18 @@ body > nav .nav-a.active {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: 1 !important;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .14) !important;
   border-radius: 50% !important;
   background: rgba(255, 255, 255, .04) !important;
+  color: var(--red, #ff4655) !important;
+  font-family: var(--font-head, 'Barlow Condensed', sans-serif) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
 }
 
-.nav-user-av img {
+body > nav .nav-user-av img {
   width: 100% !important;
   height: 100% !important;
   display: block;
@@ -132,8 +136,14 @@ body > nav .nav-a.active {
   border-radius: 50% !important;
 }
 
-.nav-user-name {
-  line-height: 1;
+body > nav .nav-user-name {
+  color: var(--text, #e8eaf0) !important;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: .5px !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
 }
 
 nav .login-btn,
@@ -146,9 +156,31 @@ nav .login-btn,
   align-items: center;
   justify-content: center;
   padding: 0 11px;
-  border-radius: 6px;
-  line-height: 1;
+  border: 1px solid var(--border, rgba(255, 255, 255, .07)) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, .04) !important;
+  color: var(--muted, #6b7280) !important;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
   white-space: nowrap;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+nav .login-btn:hover,
+#nav-user-area .login-btn:hover,
+#nav-user-area-idx .login-btn:hover,
+nav .login-btn.active,
+#nav-user-area .login-btn.active,
+#nav-user-area-idx .login-btn.active {
+  border-color: var(--border-hv, rgba(255, 255, 255, .14)) !important;
+  background: rgba(255, 255, 255, .055) !important;
+  color: var(--text, #e8eaf0) !important;
 }
 
 .nav-menu-btn {

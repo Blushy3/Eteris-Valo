@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eteris · Premier Dashboard</title>
+  <title>Eteris - Premier Dashboard</title>
   <meta name="theme-color" content="#ff4655"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="nav-user.css"/>
+  <link rel="stylesheet" href="nav-user.css?v=nav-unified"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth-modal.js"></script>
   <style>
@@ -50,9 +50,6 @@
     .nav-user-name{font-family:var(--font-mono);font-size:10px;color:var(--text);letter-spacing:.5px}
     .login-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all .15s}
     .login-btn:hover{color:var(--text);border-color:var(--border-hv)}
-    .admin-edit-btn{color:var(--red);background:var(--red-dim);border-color:rgba(255,70,85,.25)}
-    .admin-edit-btn:hover{color:#fff;background:rgba(255,70,85,.22);border-color:rgba(255,70,85,.45)}
-    .admin-edit-btn.off{color:var(--muted);background:rgba(255,255,255,.04);border-color:var(--border)}
     .scroll-top-btn{position:fixed;right:24px;bottom:24px;z-index:220;width:44px;height:44px;border-radius:10px;border:1px solid var(--border);background:rgba(12,12,18,.88);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .18s,transform .18s,border-color .18s,background .18s,color .18s;backdrop-filter:blur(16px);box-shadow:0 14px 34px rgba(0,0,0,.38)}
     .scroll-top-btn::before{content:'';position:absolute;left:11px;right:11px;top:0;height:2px;background:var(--red);border-radius:0 0 2px 2px;opacity:.75}
     .scroll-top-btn svg{position:relative;z-index:1;width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
@@ -125,29 +122,6 @@
     .class-Initiator{color:#34d399;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.08)}
     .class-Sentinel{color:#60a5fa;border-color:rgba(96,165,250,.25);background:rgba(96,165,250,.08)}
     .class-Flex{color:#e879f9;border-color:rgba(232,121,249,.25);background:rgba(232,121,249,.07)}
-    .card-admin{display:none;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);flex-direction:column;gap:10px}
-    body.secure .card-admin{display:flex}
-    .card-admin-label{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-    .pill-row{display:flex;gap:6px;flex-wrap:wrap}
-    .pill-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;text-transform:uppercase;padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer;transition:all .15s;line-height:1}
-    .pill-btn:hover{color:var(--text);border-color:var(--border-hv)}
-    .pill-btn.active-IGL{color:var(--red);background:var(--red-dim);border-color:rgba(255,70,85,.35)}
-    .pill-btn.active-Commander{color:var(--gold);background:var(--gold-dim);border-color:rgba(245,158,11,.35)}
-    .pill-btn.active-Captain{color:var(--cyan);background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.35)}
-    .pill-btn.active-Reserve{color:var(--gold);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.35)}
-    .pill-btn.active-none{color:var(--muted2);background:rgba(255,255,255,.06);border-color:var(--border-hv)}
-    .pill-btn.active-class-Duelist{color:#ff9f43;background:rgba(255,159,67,.1);border-color:rgba(255,159,67,.35)}
-    .pill-btn.active-class-Controller{color:#a78bfa;background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.35)}
-    .pill-btn.active-class-Initiator{color:#34d399;background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.35)}
-    .pill-btn.active-class-Sentinel{color:#60a5fa;background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.35)}
-    .pill-btn.active-class-Flex{color:#e879f9;background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.35)}
-    .pill-btn.active-class-none{color:var(--muted2);background:rgba(255,255,255,.04);border-color:var(--border)}
-    .agents-input{width:100%;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius);padding:7px 12px;outline:none;caret-color:var(--red);transition:border-color .15s}
-    .agents-input:focus{border-color:rgba(255,70,85,.4)}
-    .agents-input::placeholder{color:var(--muted2)}
-    .toggle-btn{font-family:var(--font-body);font-size:13px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid;cursor:pointer;transition:all .15s;width:100%;text-align:left}
-    .toggle-btn.make-reserve{color:var(--gold);border-color:rgba(245,158,11,.3);background:var(--gold-dim)}
-    .toggle-btn.make-active{color:var(--green);border-color:rgba(16,185,129,.3);background:var(--green-dim)}
 
     /* NEXT MAP */
     .next-map-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;min-height:380px;position:relative}
@@ -206,23 +180,6 @@
     .track-ticks{display:flex;justify-content:space-between}
     .track-tick{font-family:var(--font-mono);font-size:9px;color:var(--muted2);letter-spacing:.5px}
 
-    /* ADMIN */
-    .score-editor{display:none;margin-top:32px;padding-top:32px;border-top:1px solid var(--border)}
-    body.secure .score-editor{display:block}
-    .score-editor-title{font-family:var(--font-head);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:var(--red)}
-    .editor-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
-    .next-map-editor{display:none;margin-top:24px;padding:24px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--radius-lg)}
-    body.secure .next-map-editor{display:block}
-    .history-manager{display:none;margin-top:24px;padding:24px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--radius-lg)}
-    body.secure .history-manager{display:block}
-    .admin-label{font-family:var(--font-head);font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:14px}
-    .map-select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:16px}
-    .map-select-item{cursor:pointer;border-radius:var(--radius);overflow:hidden;border:2px solid transparent;transition:border-color .15s,transform .15s}
-    .map-select-item:hover{transform:scale(1.03)}
-    .map-select-item.active{border-color:var(--red)}
-    .map-select-item img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
-    .map-select-item-name{font-family:var(--font-head);font-size:12px;font-weight:700;text-transform:uppercase;text-align:center;padding:4px;background:var(--bg3);color:var(--text)}
-
     /* FORMS */
     .field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:140px}
     .field-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
@@ -258,10 +215,6 @@
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
     .reveal.in{opacity:1;transform:translateY(0)}
     .reveal-d1{transition-delay:.05s}.reveal-d2{transition-delay:.1s}.reveal-d3{transition-delay:.15s}.reveal-d4{transition-delay:.2s}.reveal-d5{transition-delay:.25s}
-    .del-hist{display:none;margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;opacity:.6;transition:opacity .15s}
-    .del-hist:hover{opacity:1}
-    body.secure .del-hist{display:inline}
-
     footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24px max(24px,calc((100vw - 1280px)/2));display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-left{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--muted2)}
     .footer-right{display:flex;align-items:center;gap:16px}
@@ -281,7 +234,6 @@
     <a class="nav-a" href="notes.html">Notes</a>
     <a class="nav-a" href="status.html">Status</a>
     <a class="nav-a" href="challenges.html">Challenges</a>
-    <a class="nav-a" href="feed.html">Feed</a>
     <a class="nav-a" href="suggestions.html">Suggestions</a>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
@@ -294,12 +246,12 @@
     <h1 class="hero-title"><span class="line1">ETER</span><span class="line2">VANGUARDS</span></h1>
     <p class="hero-sub">Premier Season Dashboard</p>
     <div class="hero-score-preview">
-      <div class="score-num" id="hero-score">—</div>
+      <div class="score-num" id="hero-score">&mdash;</div>
       <div class="score-sep"></div>
       <div class="score-info">
         <span class="score-label">Premier Score</span>
         <div class="score-target"><span style="color:var(--gold)" id="hero-target">500</span><span style="color:var(--muted);font-size:14px;font-family:var(--font-mono)"> to qualify</span></div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted2);margin-top:4px" id="hero-season">Loading…</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted2);margin-top:4px" id="hero-season">Loading...</div>
       </div>
       <div class="score-sep"></div>
       <div class="score-info">
@@ -327,7 +279,7 @@
     <p class="section-sub">Active players and reserve for the Premier season.</p>
   </div>
   <div class="roster-grid" id="roster-grid">
-    <div style="color:var(--muted);font-family:var(--font-mono);font-size:12px">Loading roster…</div>
+    <div style="color:var(--muted);font-family:var(--font-mono);font-size:12px">Loading roster...</div>
   </div>
 </section>
 
@@ -358,31 +310,11 @@
       </div>
     </div>
   </div>
-  <div class="next-map-editor reveal">
-    <div class="admin-label">Edit next map</div>
-    <div class="map-select-grid" id="map-select-grid"></div>
-    <div class="editor-row" style="margin-top:12px">
-      <div class="field"><span class="field-label">Date</span><input class="field-input" id="nm-date-in" type="text" placeholder="e.g. 09.05.2026"/></div>
-      <div class="field"><span class="field-label">Time</span><input class="field-input" id="nm-time-in" type="text" placeholder="e.g. 20:00"/></div>
-      <button class="btn btn-red btn-sm" onclick="saveNextMap()">Save</button>
-    </div>
-  </div>
   <div class="section-header reveal" style="margin-top:64px">
     <div class="section-eyebrow">History</div>
     <h2 class="section-title">Map <span class="accent">Results</span></h2>
   </div>
   <div class="map-history-grid reveal" id="map-history-grid"></div>
-  <div class="history-manager reveal">
-    <div class="admin-label">Add map result</div>
-    <div class="editor-row">
-      <div class="field" style="min-width:160px"><span class="field-label">Map</span><select class="field-input" id="hist-map-sel" style="cursor:pointer"></select></div>
-      <div class="field" style="max-width:120px"><span class="field-label">Score (Us)</span><input class="field-input" id="hist-us" type="number" min="0" max="13" placeholder="13"/></div>
-      <div class="field" style="max-width:120px"><span class="field-label">Score (Them)</span><input class="field-input" id="hist-them" type="number" min="0" max="13" placeholder="5"/></div>
-      <div class="field"><span class="field-label">Opponent</span><input class="field-input" id="hist-opp" type="text" placeholder="Team name"/></div>
-      <div class="field" style="max-width:110px"><span class="field-label">Result</span><select class="field-input" id="hist-result" style="cursor:pointer"><option value="win">Win</option><option value="loss">Loss</option><option value="upcoming">Upcoming</option></select></div>
-      <button class="btn btn-red btn-sm" onclick="addMapHistory()">Add</button>
-    </div>
-  </div>
 </section>
 
 <div class="divider"></div>
@@ -395,7 +327,7 @@
   </div>
   <div class="score-panel reveal">
     <div class="score-big">
-      <div class="score-big-num" id="score-big">—</div>
+      <div class="score-big-num" id="score-big">&mdash;</div>
       <div class="score-big-label">Current Score</div>
     </div>
     <div class="score-track">
@@ -413,25 +345,14 @@
       <div class="milestone" id="ms-mid"><span class="ms-label">Halfway</span><span class="ms-val">300</span></div>
     </div>
   </div>
-  <div class="score-editor reveal">
-    <div class="score-editor-title">Edit Score</div>
-    <div class="editor-row">
-      <div class="field"><span class="field-label">Current Score</span><input class="field-input" id="edit-score" type="number" placeholder="0"/></div>
-      <div class="field"><span class="field-label">Qualification threshold</span><input class="field-input" id="edit-target" type="number" placeholder="500"/></div>
-      <div class="field"><span class="field-label">Score MAX</span><input class="field-input" id="edit-max" type="number" placeholder="600"/></div>
-      <div class="field"><span class="field-label">Season / Act</span><input class="field-input" id="edit-season" type="text" placeholder="Episode 8 Act 3"/></div>
-      <button class="btn btn-red btn-sm" onclick="saveScore()">Save</button>
-    </div>
-  </div>
 </section>
 
 <div class="divider"></div>
 
 <footer>
-  <div class="footer-left">© 2026 Eteris Esport · Valorant Premier · powered by Supabase</div>
+  <div class="footer-left">&copy; 2026 Eteris Esport - Valorant Premier - powered by Supabase</div>
   <div class="footer-right">
     <a class="footer-link" href="notes.html">Notes</a>
-    <a class="footer-link" href="feed.html">Feed</a>
     <a class="footer-link" href="account.html">Account</a>
     <a class="footer-link" href="rules.html">Rules & Privacy</a>
   </div>
@@ -448,7 +369,7 @@
   <div class="modal">
     <div class="modal-title">Login</div>
     <div class="modal-sub">Enter your personal access code to log in.</div>
-    <input class="field-input" id="sec-input" type="password" placeholder="Access code…" style="width:100%"/>
+    <input class="field-input" id="sec-input" type="password" placeholder="Access code..." style="width:100%"/>
     <div class="modal-err" id="sec-err"></div>
     <div class="modal-actions">
       <button class="btn btn-red btn-sm" onclick="submitSecure()">Login</button>
@@ -468,41 +389,30 @@ const sb=supabase.createClient(
   'sb_publishable_ZsL8foOFNJYOa3FW4YoKdw_-gJCnZ5P'
 );
 
-/* ── SESSION ── */
+/* SESSION */
 const SESSION_KEY='eteris_social_user';
 const getSession=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null');}catch{return null;}};
 const setSession=u=>{if(u)localStorage.setItem(SESSION_KEY,JSON.stringify(u));else localStorage.removeItem(SESSION_KEY);};
 let socialUser=getSession();
 let secureMode=false;
 
-/* ── NAV ── */
+/* NAV */
 function renderNavUser(){
   const area=document.getElementById('nav-user-area-idx');if(!area)return;
   if(!socialUser){area.innerHTML=`<button class="login-btn" onclick="openLogin()">Login</button>`;return;}
   const shownName=socialUser.display_name||socialUser.username;
   const avH=socialUser.avatar_url?`<img src="${socialUser.avatar_url}" alt=""/>`:(shownName||'?').slice(0,2).toUpperCase();
-  const editBtn=socialUser.is_admin?`<button class="login-btn admin-edit-btn ${secureMode?'':'off'}" onclick="toggleAdminEdit()">${secureMode?'Editing':'Edit'}</button>`:'';
+  const editBtn=socialUser.is_admin?`<a class="login-btn" href="edit.html">Edit</a>`:'';
   area.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><a class="nav-user-pill" href="account.html"><div class="nav-user-av">${avH}</div><span class="nav-user-name">${shownName}</span></a>${editBtn}<button class="login-btn" onclick="logoutNav()">Logout</button></div>`;
 }
-function logoutNav(){socialUser=null;setSession(null);secureMode=false;document.body.classList.remove('secure');renderNavUser();}
-function setAdminEditMode(on){
-  secureMode=!!(on&&socialUser?.is_admin);
-  document.body.classList.toggle('secure',secureMode);
-  document.querySelectorAll('.del-hist').forEach(b=>b.style.display=secureMode?'inline':'none');
-  renderNavUser();
-}
-function toggleAdminEdit(){
-  if(!socialUser?.is_admin)return;
-  setAdminEditMode(!secureMode);
-}
-function openLogin(){EterisAuth.open({copy:'Enter your private access code to log in.',onLogin:data=>{socialUser=data;setSession(data);renderNavUser();if(data.is_admin)setAdminEditMode(false);toast(`Welcome, ${data.display_name||data.username}!${data.is_admin?' Edit mode available.':''}`);}});}
+function logoutNav(){socialUser=null;setSession(null);secureMode=false;renderNavUser();}
+function openLogin(){EterisAuth.open({copy:'Enter your private access code to log in.',onLogin:data=>{socialUser=data;setSession(data);renderNavUser();toast(`Welcome, ${data.display_name||data.username}!`);}});}
 async function submitSecure(){
   const code=document.getElementById('sec-input').value.trim();
   const{data,error}=await sb.from('accounts').select('*').eq('access_code',code).single();
   if(data){
     socialUser=data;setSession(data);closeModal('modal-secure');renderNavUser();
-    if(data.is_admin)setAdminEditMode(false);
-    toast(`Welcome, ${data.display_name||data.username}!${data.is_admin?' Edit mode available.':''}`);
+    toast(`Welcome, ${data.display_name||data.username}!`);
   }else{
     document.getElementById('sec-err').textContent='Invalid code.';
     document.getElementById('sec-input').value='';document.getElementById('sec-input').focus();
@@ -513,7 +423,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));});
 
-/* ── UTILS ── */
+/* UTILS */
 const MAPS=['abyss','ascent','bind','breeze','corrode','fracture','haven','icebox','lotus','pearl','split','sunset'];
 const MAP_IMG=n=>`maps/${n}.png`;
 const CLASSES=['Duelist','Controller','Initiator','Sentinel','Flex','none'];
@@ -523,7 +433,7 @@ const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersect
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 function toast(msg,ok=true){const el=document.getElementById('snackbar');document.getElementById('snackbar-txt').textContent=msg;el.classList.toggle('ok',ok);el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),3000);}
 
-/* ── SCORE ── */
+/* SCORE */
 function applyScore(d){
   const pct=Math.min((d.current/d.max)*100,100);
   const qualPct=Math.min((d.target/d.max)*100,100);
@@ -544,30 +454,10 @@ function applyScore(d){
   document.getElementById('ms-qual').classList.toggle('reached',d.current>=d.target);
   document.getElementById('ms-qual').classList.toggle('active',d.current<d.target&&d.current>0);
   document.getElementById('ms-top8').classList.toggle('reached',d.current>=d.max);
-  document.getElementById('edit-score').value=d.current;
-  document.getElementById('edit-target').value=d.target;
-  document.getElementById('edit-max').value=d.max;
-  document.getElementById('edit-season').value=d.season;
 }
 async function loadScore(){const{data}=await sb.from('premier_score').select('*').order('id',{ascending:false}).limit(1).single();if(data)applyScore(data);}
-async function saveScore(){
-  const current=parseInt(document.getElementById('edit-score').value)||0;
-  const target=parseInt(document.getElementById('edit-target').value)||500;
-  const max=parseInt(document.getElementById('edit-max').value)||600;
-  const season=document.getElementById('edit-season').value.trim();
-  const{data:ex}=await sb.from('premier_score').select('id').order('id').limit(1).single();
-  const{error}=await sb.from('premier_score').upsert({id:ex?.id||1,current,target,max,season,updated_at:new Date().toISOString()});
-  if(error){toast('Save error',false);return;}
-  applyScore({current,target,max,season});toast('Score updated ✓');
-}
 
-/* ── ROSTER ── */
-function buildRankBtns(rl,pid){
-  return RANKS.map(r=>{const cls=rl===r?`active-${r}`:'';return `<button class="pill-btn ${cls}" onclick="setRank(${pid},'${r}',this.closest('.player-card'))">${r==='none'?'No Rank':r}</button>`;}).join('');
-}
-function buildClassBtns(ac,pid){
-  return CLASSES.map(c=>{const active=ac===c||((!ac||ac==='none')&&c==='none');const cls=active?`active-class-${c}`:'';return `<button class="pill-btn ${cls}" onclick="saveClass(${pid},'${c}',this)">${CLASS_LABELS[c]||c}</button>`;}).join('');
-}
+/* ROSTER */
 function renderRoster(players,accounts){
   accounts=accounts||[];
   const grid=document.getElementById('roster-grid');
@@ -593,16 +483,7 @@ function renderRoster(players,accounts){
         <div class="player-info"><div class="player-name">${displayName}</div></div>
       </div>
       ${agentsHTML?`<div class="player-agents-row">${agentsHTML}</div>`:''}
-      ${classBadgeHTML}
-      <div class="card-admin">
-        <div><div class="card-admin-label">Assign rank</div><div class="pill-row">${buildRankBtns(rl,p.id)}</div></div>
-        <div><div class="card-admin-label" style="margin-top:8px;margin-bottom:5px">Class</div><div class="pill-row">${buildClassBtns(ac,p.id)}</div></div>
-        <div>
-          <div class="card-admin-label" style="margin-top:8px;margin-bottom:5px">Agents <span style="color:var(--muted2);font-size:8px">(comma separated)</span></div>
-          <input class="agents-input" type="text" placeholder="e.g. Jett, Omen" value="${agentsList.join(', ')}" onblur="saveAgents(${p.id},this.value)"/>
-        </div>
-        <button class="toggle-btn ${isReserve?'make-active':'make-reserve'}" style="margin-top:4px" onclick="toggleReserve(${p.id},${p.is_reserve})">${isReserve?'Move to active roster':'Move to reserve'}</button>
-      </div>`;
+      ${classBadgeHTML}`;
     grid.appendChild(card);
   });
   grid.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
@@ -614,43 +495,20 @@ async function loadRoster(){
   ]);
   if(players)renderRoster(players,accounts||[]);
 }
-async function toggleReserve(id,cur){const{error}=await sb.from('premier_players').update({is_reserve:!cur}).eq('id',id);if(error){toast('Error',false);return;}toast(!cur?'Moved to reserve':'Moved to active roster');await loadRoster();}
-async function setRank(id,rank,cardEl){
-  const rankLabel=rank==='none'?null:rank;
-  const upd={rank_label:rankLabel};
-  if(rank==='Reserve')upd.is_reserve=true;
-  else if(cardEl.classList.contains('reserve')&&rank!=='Reserve')upd.is_reserve=false;
-  const{error}=await sb.from('premier_players').update(upd).eq('id',id);
-  if(error){toast('Error',false);return;}
-  toast('Rank updated ✓');await loadRoster();
-}
-async function saveClass(id,val,btn){
-  const{error}=await sb.from('premier_players').update({agent_class:val==='none'?null:val}).eq('id',id);
-  if(error){toast('Error',false);return;}
-  toast('Class saved ✓');
-  btn.closest('.pill-row').querySelectorAll('.pill-btn').forEach(b=>b.className='pill-btn '+(b===btn?`active-class-${val}`:''));
-  const card=btn.closest('.player-card');
-  const old=card.querySelector('.player-class-badge');if(old)old.remove();
-  if(val&&val!=='none'){const badge=document.createElement('div');badge.className=`player-class-badge class-${val}`;badge.textContent=val;card.insertBefore(badge,card.querySelector('.card-admin'));}
-}
-async function saveAgents(id,val){
-  const agents_list=val.split(',').map(s=>s.trim()).filter(Boolean);
-  const{error}=await sb.from('premier_players').update({agents_list}).eq('id',id);
-  if(error){toast('Error',false);return;}
-  toast('Agents saved ✓');
-}
 
-/* ── NEXT MAP ── */
+/* NEXT MAP */
 let selectedMap='';
 function buildMapSelectGrid(){
   const grid=document.getElementById('map-select-grid');
+  if(!grid)return;
   MAPS.forEach(name=>{
     const item=document.createElement('div');item.className='map-select-item';item.dataset.map=name;
     item.innerHTML=`<img src="${MAP_IMG(name)}" alt="${name}" loading="lazy"/><div class="map-select-item-name">${name.charAt(0).toUpperCase()+name.slice(1)}</div>`;
     item.onclick=()=>{document.querySelectorAll('.map-select-item').forEach(x=>x.classList.remove('active'));item.classList.add('active');selectedMap=name;};
     grid.appendChild(item);
   });
-  document.getElementById('hist-map-sel').innerHTML=MAPS.map(m=>`<option value="${m}">${m.charAt(0).toUpperCase()+m.slice(1)}</option>`).join('');
+  const histSelect=document.getElementById('hist-map-sel');
+  if(histSelect)histSelect.innerHTML=MAPS.map(m=>`<option value="${m}">${m.charAt(0).toUpperCase()+m.slice(1)}</option>`).join('');
 }
 function applyNextMap(d){
   const name=d.map_name||'';const cap=name?name.charAt(0).toUpperCase()+name.slice(1):'';
@@ -659,19 +517,11 @@ function applyNextMap(d){
   if(name){img.src=MAP_IMG(name);img.style.display='block';}else img.style.display='none';
   document.getElementById('next-match-date').textContent=d.match_date||'TBA';
   document.getElementById('next-match-time').textContent=d.match_time||'TBA';
-  document.getElementById('nm-date-in').value=d.match_date||'';
-  document.getElementById('nm-time-in').value=d.match_time||'';
-  if(name){document.querySelectorAll('.map-select-item').forEach(x=>x.classList.toggle('active',x.dataset.map===name));selectedMap=name;}
+  if(name){selectedMap=name;}
 }
 async function loadNextMap(){const{data}=await sb.from('premier_next_map').select('*').order('id').limit(1).single();if(data)applyNextMap(data);}
-async function saveNextMap(){
-  const map_name=selectedMap;const match_date=document.getElementById('nm-date-in').value.trim();const match_time=document.getElementById('nm-time-in').value.trim();
-  const{data:ex}=await sb.from('premier_next_map').select('id').order('id').limit(1).single();
-  const{error}=await sb.from('premier_next_map').upsert({id:ex?.id||1,map_name,match_date,match_time,opponent:'',updated_at:new Date().toISOString()});
-  if(error){toast('Save error',false);return;}applyNextMap({map_name,match_date,match_time});toast('Map updated ✓');
-}
 
-/* ── MAP HISTORY ── */
+/* MAP HISTORY */
 function renderMapHistory(data){
   const grid=document.getElementById('map-history-grid');
   if(!data?.length){grid.innerHTML='<div style="color:var(--muted);font-family:var(--font-mono);font-size:12px;grid-column:1/-1">No map history yet.</div>';return;}
@@ -679,31 +529,15 @@ function renderMapHistory(data){
   data.forEach(h=>{
     const name=h.map_name||'';const cap=name.charAt(0).toUpperCase()+name.slice(1);
     const resLabel=h.result==='win'?'WIN':h.result==='loss'?'LOSS':'UPCOMING';
-    const score=(h.score_us!=null&&h.score_them!=null)?`<div class="map-hist-score">${h.score_us} — ${h.score_them}</div>`:'';
+    const score=(h.score_us!=null&&h.score_them!=null)?`<div class="map-hist-score">${h.score_us} - ${h.score_them}</div>`:'';
     const card=document.createElement('div');card.className='map-hist-card';
-    card.innerHTML=`<img src="${MAP_IMG(name)}" alt="${name}" loading="lazy"/><div class="map-hist-info"><div style="display:flex;align-items:center;gap:6px"><div class="map-hist-name">${cap}</div><button class="del-hist" style="${secureMode?'':'display:none'}" onclick="delHistory(${h.id},this)">✕</button></div><div class="map-hist-result result-${h.result}">${resLabel}</div>${score}<div class="map-hist-opponent">${h.opponent?'vs '+h.opponent:''}</div></div>`;
+    card.innerHTML=`<img src="${MAP_IMG(name)}" alt="${name}" loading="lazy"/><div class="map-hist-info"><div class="map-hist-name">${cap}</div><div class="map-hist-result result-${h.result}">${resLabel}</div>${score}<div class="map-hist-opponent">${h.opponent?'vs '+h.opponent:''}</div></div>`;
     grid.appendChild(card);
   });
 }
 async function loadMapHistory(){const{data}=await sb.from('premier_map_history').select('*').order('played_at',{ascending:false});renderMapHistory(data);}
-async function addMapHistory(){
-  const map_name=document.getElementById('hist-map-sel').value;
-  const score_us=parseInt(document.getElementById('hist-us').value);
-  const score_them=parseInt(document.getElementById('hist-them').value);
-  const opponent=document.getElementById('hist-opp').value.trim();
-  const result=document.getElementById('hist-result').value;
-  const payload={map_name,opponent,result,played_at:new Date().toISOString()};
-  if(!isNaN(score_us))payload.score_us=score_us;if(!isNaN(score_them))payload.score_them=score_them;
-  const{error}=await sb.from('premier_map_history').insert(payload);
-  if(error){toast('Save error',false);return;}toast('Result added ✓');['hist-us','hist-them','hist-opp'].forEach(id=>document.getElementById(id).value='');await loadMapHistory();
-}
-async function delHistory(id,btn){
-  btn.textContent='…';btn.disabled=true;
-  const{error}=await sb.from('premier_map_history').delete().eq('id',id);
-  if(!error)btn.closest('.map-hist-card').remove();else{btn.textContent='✕';btn.disabled=false;toast('Error',false);}
-}
 
-/* ── INIT ── */
+/* INIT */
 function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
 function updateScrollTopBtn(){
   const btn=document.getElementById('scroll-top-btn');
@@ -716,12 +550,12 @@ window.addEventListener('scroll',updateScrollTopBtn,{passive:true});
   document.getElementById('scroll-top-btn')?.addEventListener('click',scrollToTop);
   buildMapSelectGrid();
   await Promise.all([loadScore(),loadRoster(),loadNextMap(),loadMapHistory()]);
-  setAdminEditMode(false);
   updateScrollTopBtn();
 })();
 </script>
-<script src="shared-ui.js"></script>
+<script src="shared-ui.js?v=nav-unified"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>
 </html>
+

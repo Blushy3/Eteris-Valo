@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Eteris · Account</title>
+  <title>Eteris - Account</title>
   <meta name="theme-color" content="#ff4655"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="nav-user.css"/>
+  <link rel="stylesheet" href="nav-user.css?v=nav-unified"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth-modal.js"></script>
   <style>
@@ -28,7 +28,7 @@
 <body>
 <nav>
   <a class="nav-logo" href="index.html"><div class="nav-logo-text">Eteris<span>.</span></div></a>
-  <div class="nav-links"><a class="nav-a" href="index.html">Dashboard</a><a class="nav-a" href="notes.html">Notes</a><a class="nav-a" href="status.html">Status</a><a class="nav-a" href="challenges.html">Challenges</a><a class="nav-a" href="feed.html">Feed</a><a class="nav-a" href="suggestions.html">Suggestions</a></div>
+  <div class="nav-links"><a class="nav-a" href="index.html">Dashboard</a><a class="nav-a" href="notes.html">Notes</a><a class="nav-a" href="status.html">Status</a><a class="nav-a" href="challenges.html">Challenges</a><a class="nav-a" href="suggestions.html">Suggestions</a></div>
   <div class="nav-right" id="nav-user-area"></div>
 </nav>
 <main class="page" id="page"></main>
@@ -58,7 +58,7 @@ let me=getS();
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500)}
-function renderNav(){const area=$('#nav-user-area');if(!me){area.innerHTML='<button class="login-btn" onclick="showLogin()">Login</button>';return}area.innerHTML=`<button class="login-btn" onclick="logout()">Logout</button>`}
+function renderNav(){const area=$('#nav-user-area');if(!me){area.innerHTML='<button class="login-btn" onclick="showLogin()">Login</button>';return}const name=me.display_name||me.username;const av=avatarHtml();const edit=me.is_admin?`<a class="login-btn" href="edit.html">Edit</a>`:'';area.innerHTML=`<a class="nav-user-pill" href="account.html"><div class="nav-user-av">${av}</div><span class="nav-user-name">${esc(name)}</span></a>${edit}<button class="login-btn" onclick="logout()">Logout</button>`}
 function logout(){me=null;setS(null);renderNav();render()}
 function showLogin(){EterisAuth.open({copy:'Enter your private access code to open account settings.',onLogin:user=>{me=user;setS(user);render();toast('Logged in')}})}
 function closeLogin(){$('#login-modal')?.classList.remove('open')}
@@ -82,8 +82,9 @@ document.addEventListener('input',e=>{if(e.target?.id!=='display-name')return;e.
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin();if(e.key==='Enter'&&$('#login-modal')?.classList.contains('open'))login()});
 render();
 </script>
-<script src="shared-ui.js"></script>
+<script src="shared-ui.js?v=nav-unified"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>
 </html>
+

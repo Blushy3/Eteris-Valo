@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Eteris · Notes</title>
+  <title>Eteris - Notes</title>
   <meta name="theme-color" content="#ff4655"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="nav-user.css"/>
+  <link rel="stylesheet" href="nav-user.css?v=nav-unified"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth-modal.js"></script>
   <style>
@@ -46,7 +46,7 @@
     .login-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all .15s}
     .login-btn:hover{color:var(--text);border-color:var(--border-hv)}
 
-    /* APP LAYOUT — full height minus nav */
+    /* APP LAYOUT - full height minus nav */
     .app{display:flex;height:calc(100vh - 60px);position:relative;z-index:1}
 
     /* SIDEBAR */
@@ -176,7 +176,7 @@
     .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{background:rgba(255,255,255,.09)}
     .btn-sm{font-size:12px;padding:7px 14px}
 
-    /* ── CUSTOM DROPDOWNS ── */
+    /* CUSTOM DROPDOWNS */
     .dd-wrap{position:relative;display:inline-flex;flex-shrink:0}
     .dd-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:0 10px;height:32px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
     .dd-btn:hover{color:var(--text);border-color:var(--border-hv)}
@@ -257,7 +257,6 @@
     <a class="nav-a active" href="notes.html">Notes</a>
     <a class="nav-a" href="status.html">Status</a>
     <a class="nav-a" href="challenges.html">Challenges</a>
-    <a class="nav-a" href="feed.html">Feed</a>
     <a class="nav-a" href="suggestions.html">Suggestions</a>
   </div>
   <div class="nav-right" id="nav-user-area"></div>
@@ -271,7 +270,7 @@
       <button class="new-btn" id="new-btn" onclick="newNote()" style="display:none">+ New</button>
     </div>
     <div class="sidebar-search" id="sidebar-search" style="display:none">
-      <input class="search-input" type="text" placeholder="Search notes…" oninput="filterNotes(this.value)"/>
+      <input class="search-input" type="text" placeholder="Search notes..." oninput="filterNotes(this.value)"/>
     </div>
     <div class="notes-list" id="notes-list">
       <div class="list-empty"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Login to see notes</div>
@@ -301,9 +300,9 @@
     <div id="active-editor" style="display:none;flex-direction:column;height:100%">
       <!-- Toolbar row 1: title + actions -->
       <div class="toolbar" id="toolbar-top" style="padding:10px 16px;gap:8px;flex-wrap:nowrap">
-        <input class="title-input" id="note-title" placeholder="Note title…" oninput="markDirty()"/>
+        <input class="title-input" id="note-title" placeholder="Note title..." oninput="markDirty()"/>
         <div style="display:flex;gap:6px;flex-shrink:0">
-          <button class="tb-pin" id="pin-btn" onclick="togglePin()">📌 Pin</button>
+          <button class="tb-pin" id="pin-btn" onclick="togglePin()">Pin</button>
           <div class="dd-wrap" id="export-dd">
             <button class="tb-delete" type="button" onclick="toggleMenu('export-dd')">Export</button>
             <div class="dd-menu right">
@@ -412,7 +411,7 @@
 
       <!-- Content area -->
       <div class="editor-scroll">
-        <div class="editor-body" id="editor-body" contenteditable="true" spellcheck="true" data-placeholder="Start writing…"></div>
+        <div class="editor-body" id="editor-body" contenteditable="true" spellcheck="true" data-placeholder="Start writing..."></div>
       </div>
 
       <!-- Status bar -->
@@ -464,7 +463,7 @@
   <div class="modal">
     <div class="modal-title">Login</div>
     <div class="modal-sub">Enter your personal access code to access your notes.</div>
-    <div class="field"><span class="field-label">Access Code</span><input class="field-input" id="login-code" type="password" placeholder="Your code…"/></div>
+    <div class="field"><span class="field-label">Access Code</span><input class="field-input" id="login-code" type="password" placeholder="Your code..."/></div>
     <div class="modal-err" id="login-err"></div>
     <div class="modal-actions">
       <button class="btn btn-red btn-sm" onclick="doLogin()">Login</button>
@@ -506,7 +505,8 @@ function renderNav(){
   if(!me){area.innerHTML=`<button class="login-btn" onclick="openLogin()">Login</button>`;return;}
   const shownName=me.display_name||me.username;
   const avH=me.avatar_url?`<img src="${me.avatar_url}" alt=""/>`:(shownName||'?').slice(0,2).toUpperCase();
-  area.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><a class="nav-user-pill" href="account.html"><div class="nav-user-av">${avH}</div><span class="nav-user-name">${shownName}</span></a><button class="login-btn" onclick="logout()">Logout</button></div>`;
+  const edit=me.is_admin?`<a class="login-btn" href="edit.html">Edit</a>`:'';
+  area.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><a class="nav-user-pill" href="account.html"><div class="nav-user-av">${avH}</div><span class="nav-user-name">${shownName}</span></a>${edit}<button class="login-btn" onclick="logout()">Logout</button></div>`;
 }
 function logout(){me=null;setS(null);renderNav();showLocked();}
 
@@ -566,7 +566,7 @@ function renderList(){
     row.innerHTML=`
       <div class="nr-title" style="${n.color?`color:${n.color}`:''}">${n.title||'Untitled'}</div>
       <div class="nr-preview">${preview||'Empty'}</div>
-      <div class="nr-meta">${n.is_pinned?`<span class="nr-pin">📌</span>`:''}<span class="nr-date">${date}</span></div>`;
+      <div class="nr-meta">${n.is_pinned?`<span class="nr-pin">Pinned</span>`:''}<span class="nr-date">${date}</span></div>`;
     row.onclick=()=>openNote(n.id);
     list.appendChild(row);
   });
@@ -621,7 +621,7 @@ async function saveNote(showToast=true){
   const note=allNotes.find(n=>n.id===activeId);
   if(note){note.title=title;note.content=content;note.color=activeColor;note.updated_at=new Date().toISOString();}
   isDirty=false;setStatusSaved(false);renderList();
-  if(showToast)toast('Saved ✓');
+  if(showToast)toast('Saved');
 }
 async function deleteNote(){
   if(activeId===null)return;
@@ -650,7 +650,7 @@ async function togglePin(){
 }
 function updatePinBtn(pinned){
   const b=document.getElementById('pin-btn');
-  b.textContent=pinned?'📌 Pinned':'📌 Pin';
+  b.textContent=pinned?'Pinned':'Pin';
   b.classList.toggle('on',pinned);
 }
 
@@ -674,7 +674,7 @@ function updateStatus(){
 function setStatusSaved(dirty){
   const el=document.getElementById('sb-saved');
   el.className='sb-item sb-saved'+(dirty?' dirty':' saved');
-  el.textContent=dirty?'Unsaved…':'All saved';
+  el.textContent=dirty?'Unsaved...':'All saved';
   if(!dirty)setTimeout(()=>{if(!isDirty){el.textContent='';el.className='sb-item sb-saved';}},3000);
 }
 function markDirty(){
@@ -944,8 +944,9 @@ editorBody.addEventListener('keydown',e=>{
   else showLocked();
 })();
 </script>
-<script src="shared-ui.js"></script>
+<script src="shared-ui.js?v=nav-unified"></script>
 <script src="site-footer.js"></script>
 <script src="rules-consent.js"></script>
 </body>
 </html>
+

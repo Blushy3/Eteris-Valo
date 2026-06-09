@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Eteris - Skill Rating</title>
+  <meta name="theme-color" content="#ff4655"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="nav-user.css?v=nav-unified"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-modal.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#060608;--panel:#0c0c12;--border:rgba(255,255,255,.07);--border-hv:rgba(255,255,255,.15);--text:#e8eaf0;--muted:#6b7280;--muted2:#4b5563;--red:#ff4655;--green:#10b981;--gold:#f59e0b;--font-head:'Barlow Condensed',sans-serif;--font-body:'Rajdhani',sans-serif;--font-mono:'JetBrains Mono',monospace}
+    body{min-height:100vh;background:radial-gradient(circle at 82% 0,rgba(255,70,85,.11),transparent 34%),radial-gradient(circle at 12% 36%,rgba(0,212,255,.04),transparent 30%),var(--bg);color:var(--text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.34;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:52px 52px}
+    nav{position:sticky;top:0;z-index:20;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1280px)/2));background:rgba(6,6,8,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(22px)}
+    .nav-logo{text-decoration:none}.nav-logo-text{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase}.nav-logo-text span{color:var(--red)}
+    .nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px}.nav-a{font-family:var(--font-head);font-size:15px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 14px;border-radius:6px;text-decoration:none}.nav-a:hover,.nav-a.active{color:var(--text);background:rgba(255,255,255,.04)}
+    .nav-right{display:flex;align-items:center;gap:8px}.login-btn,.btn{height:28px;display:inline-flex;align-items:center;justify-content:center;font:10px var(--font-mono);letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:0 11px;cursor:pointer;text-decoration:none}.login-btn:hover,.btn:hover{color:var(--text);border-color:var(--border-hv)}.btn-red{background:var(--red);border-color:var(--red);color:#fff}
+    .page{position:relative;z-index:1;width:min(1260px,calc(100vw - 32px));margin:54px auto 80px}.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.75fr);gap:18px;align-items:end;margin-bottom:28px}.eyebrow{font:10px var(--font-mono);letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}.title{font-family:var(--font-head);font-size:82px;font-weight:800;text-transform:uppercase;line-height:.9}.title span{display:block;color:var(--red)}.sub{margin-top:14px;color:var(--text);font-size:26px;line-height:1.25;max-width:900px}.hero-card,.info-card,.rank-card{background:rgba(12,12,18,.76);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(18px)}.hero-card{padding:18px}.hero-stat{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}.hero-stat:last-child{border:0}.hero-stat b{font-family:var(--font-head);font-size:34px;line-height:1}.hero-stat span{font:10px var(--font-mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+    .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.info-card{padding:17px;color:var(--muted);font-size:16px;line-height:1.5}.info-card b{display:block;color:#fff;font-family:var(--font-head);font-size:25px;text-transform:uppercase;margin-bottom:6px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.screenshot-guide{margin-top:44px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px}.section-title{font-family:var(--font-head);font-size:42px;font-weight:800;text-transform:uppercase;line-height:1}.section-copy{max-width:760px;color:var(--muted);font-size:17px;line-height:1.45}.guide-grid{display:grid;grid-template-columns:1fr;gap:16px}.guide-card{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);align-items:stretch;overflow:hidden;background:rgba(12,12,18,.76);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(18px)}.guide-media-wrap{display:grid;place-items:center;background:rgba(255,255,255,.025);border-right:1px solid var(--border);padding:10px}.guide-media{display:block;width:100%;max-height:420px;object-fit:contain;border-radius:8px}.guide-body{display:flex;flex-direction:column;justify-content:center;padding:24px}.guide-body b{display:block;color:#fff;font-family:var(--font-head);font-size:30px;text-transform:uppercase;margin-bottom:8px}.guide-body p{color:var(--muted);font-size:17px;line-height:1.45}.guide-body span{display:inline-flex;width:max-content;margin-bottom:14px;border:1px solid rgba(255,70,85,.3);border-radius:999px;padding:5px 9px;color:var(--red);background:rgba(255,70,85,.08);font:10px var(--font-mono);letter-spacing:1.3px;text-transform:uppercase}.screenshot-note{margin-top:14px;padding:15px 16px;border:1px solid rgba(255,70,85,.2);border-radius:12px;background:rgba(255,70,85,.055);color:var(--text);font-size:16px;line-height:1.45}@media(max-width:980px){.hero,.info-grid{grid-template-columns:1fr}.guide-card{grid-template-columns:1fr}.guide-media-wrap{border-right:0;border-bottom:1px solid var(--border)}.title{font-size:64px}.sub{font-size:22px}.nav-links{display:none}.section-head{align-items:flex-start;flex-direction:column}}@media(max-width:620px){.page{width:min(100% - 20px,1260px);margin-top:32px}.title{font-size:48px}.sub{font-size:19px}.section-title{font-size:34px}.guide-body{padding:18px}.guide-body b{font-size:26px}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html"><div class="nav-logo-text">Eteris<span>.</span></div></a>
+  <div class="nav-links"><a class="nav-a" href="index.html">Dashboard</a><a class="nav-a" href="notes.html">Notes</a><a class="nav-a" href="status.html">Status</a><a class="nav-a active" href="challenges.html">Challenges</a><a class="nav-a" href="suggestions.html">Suggestions</a></div>
+  <div class="nav-right" id="nav-user-area"></div>
+</nav>
+<main class="page">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Ranking mode</div>
+      <h1 class="title">Skill Rating<span>Mode info</span></h1>
+      <p class="sub">Submit match stats, gain or lose SR, and chase one clear title: Eteris Player at 10 000 SR.</p>
+      <div class="actions"><a class="btn btn-red" href="challenges.html">Back to challenges</a><a class="btn" href="rules.html">Rules & Privacy</a></div>
+    </div>
+    <aside class="hero-card">
+      <div class="hero-stat"><span>Starting rating</span><b>0 SR</b></div>
+      <div class="hero-stat"><span>Main target</span><b>10 000 SR</b></div>
+      <div class="hero-stat"><span>Title unlocked</span><b>Eteris Player</b></div>
+      <div class="hero-stat"><span>After title</span><b>SR keeps rising</b></div>
+    </aside>
+  </section>
+  <section class="info-grid">
+    <article class="info-card"><b>Rating</b>Everyone starts at 0 SR. The system has one main title target instead of many rank names: reach 10 000 SR to become an Eteris Player.</article>
+    <article class="info-card"><b>Match result</b>Wins start with a positive base. Losses start with a negative base. Rating can never drop below 0 SR.</article>
+    <article class="info-card"><b>Performance</b>ACS, kills, deaths, assists, kill difference, K/D, damage differential, ADR, HS%, KAST, first kills, first deaths and multi-kills adjust the final gain or loss.</article>
+    <article class="info-card"><b>Eteris Player</b>At 10 000 SR the player receives the Eteris Player mark. After that, SR still grows so the leaderboard can keep tracking the best player.</article>
+    <article class="info-card"><b>Honesty</b>Reports should match real match stats. Wrong or missing reports can lead to a charity or team-prize penalty.</article>
+    <article class="info-card"><b>Rewards</b>The Eteris Player target is reward-ready. The best player below Eteris Player can also be rewarded, so both the top title and the chase below it matter.</article>
+  </section>
+  <section class="screenshot-guide" id="screenshot-guide">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Tracker screenshot</div>
+        <h2 class="section-title">How to send stats</h2>
+      </div>
+      <p class="section-copy">Use a clean screenshot of one player row from Tracker. The screenshot is read in the browser, then you can correct every detected value before sending the report.</p>
+    </div>
+    <div class="guide-grid">
+      <article class="guide-card">
+        <div class="guide-media-wrap"><img class="guide-media" src="SRhelp/1.png" alt="Tracker profile with recent match selected"/></div>
+        <div class="guide-body"><span>Step 01</span><b>Open Tracker</b><p>Go to tracker.gg, open your profile, then choose the last match you played.</p></div>
+      </article>
+      <article class="guide-card">
+        <div class="guide-media-wrap"><img class="guide-media" src="SRhelp/2.png" alt="Tracker match table with player row area"/></div>
+        <div class="guide-body"><span>Step 02</span><b>Find your row</b><p>Find yourself in the match table and screenshot only the row with your stats.</p></div>
+      </article>
+      <article class="guide-card">
+        <div class="guide-media-wrap"><img class="guide-media" src="SRhelp/3.png" alt="Example of the final stats row screenshot"/></div>
+        <div class="guide-body"><span>Step 03</span><b>Send this shape</b><p>The best screenshot shows only the row in this order: ACS, K, D, A, +/-, K/D, DDA, ADR, HS%, KAST, FK, FD, MK.</p></div>
+      </article>
+    </div>
+    <div class="screenshot-note">Tip: you can upload the file or paste a screenshot directly with Ctrl+V in the Submit Match window. If OCR reads something wrong, correct the value before submitting.</div>
+  </section>
+</main>
+<script>
+const SESSION_KEY='eteris_social_user';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const getS=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}};
+function avatar(a){const n=a?.display_name||a?.username||'Player';return a?.avatar_url?`<img src="${esc(a.avatar_url)}" alt=""/>`:esc(n.slice(0,2).toUpperCase())}
+function renderNav(){const area=document.getElementById('nav-user-area');const me=getS();if(!me){area.innerHTML='<button class="login-btn" type="button" onclick="EterisAuth.open()">Login</button>';return}const name=me.display_name||me.username||'Player';area.innerHTML=`<a class="nav-user-pill" href="account.html"><span class="nav-user-av">${avatar(me)}</span><span class="nav-user-name">${esc(name)}</span></a>${me.is_admin?'<a class="login-btn" href="edit.html">Edit</a>':''}<button class="login-btn" onclick="localStorage.removeItem('${SESSION_KEY}');location.reload()">Logout</button>`}
+renderNav();
+</script>
+<script src="shared-ui.js?v=nav-unified"></script>
+<script src="site-footer.js"></script>
+<script src="rules-consent.js"></script>
+</body>
+</html>
